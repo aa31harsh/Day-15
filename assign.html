@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Movie Filter App</title>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      padding: 30px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #00ffcc;
+    }
+
+    .buttons {
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #00796b;
+      color: white;
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #004d40;
+    }
+
+    .search-box input {
+      width: 300px;
+      padding: 10px;
+      border-radius: 15px;
+      border: none;
+    }
+
+    .movie-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .movie-card {
+      width: 200px;
+      background-color: #333;
+      border-radius: 15px;
+      overflow: hidden;
+      text-align: left;
+      transition: transform 0.3s ease;
+    }
+
+    .movie-card:hover {
+      transform: scale(1.05);
+    }
+
+    .movie-card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .movie-info {
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎬 MOVIE LIST 🎬</h1>
+
+    <div class="buttons">
+      <button onclick="filterMovies('marvel')">Marvel Movie</button>
+      <button onclick="filterMovies('funny')">Funny Movie</button>
+      <button onclick="filterMovies('animation')">Animation Movie</button>
+      <button onclick="filterMovies('webseries')">Web Series Movie</button>
+    </div>
+
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search here..." onkeyup="searchMovies()">
+    </div>
+
+    <div id="movie-list" class="movie-list"></div>
+  </div>
+
+  <script>
+    const movies = [
+      {
+        title: "Captain Marvel",
+        type: "marvel",
+        image: "s-l1200.jpg"
+      },
+      {
+        title: "Ms. Marvel",
+        type: "marvel",
+        image: "images.jpeg"
+      },
+      {
+        title: "Welcome",
+        type: "funny",
+        image: "MV5BYzMwYmEzYTktY2M4YS00Y2I0LTk3ODMtYTY4NjU3YWJhMzM2XkEyXkFqcGc@._V1_.jpg"
+      },
+      {
+        title: "Hera Pheri",
+        type: "funny",
+        image: "MV5BNDZmMGEwMjQtNjFlNi00ZGIxLTlkZjItNmU3Mzg4Y2E0ZjUzXkEyXkFqcGc@._V1_.jpg"
+      },
+      {
+        title: "Spirited Away",
+        type: "animation",
+        image: "81m8urzEz4L.JPG"
+      },
+      {
+        title: "Coco",
+        type: "animation",
+        image: "71NNjdL6mOL._AC_UF894,1000_QL80_.jpg"
+      },
+      {
+        title: "Scam 1992",
+        type: "webseries",
+        image: "MV5BZDY4YzgzNmYtYWQyZi00NGNiLThjNjEtOTYwMGNhNWQ0NzliXkEyXkFqcGc@._V1_.jpg"
+      },
+      {
+        title: "Stranger Things",
+        type: "webseries",
+        image: "stranger_things_8_399456a3-4e07-4ec6-8c4b-d6df8107ec9a.webp"
+      }
+    ];
+
+    function filterMovies(type) {
+      const filtered = movies.filter(movie => movie.type === type);
+      displayMovies(filtered);
+    }
+
+    function displayMovies(movieArray) {
+      const movieList = document.getElementById('movie-list');
+      movieList.innerHTML = "";
+      movieArray.forEach(movie => {
+        const card = `
+          <div class="movie-card">
+            <img src="${movie.image}" alt="${movie.title}">
+            <div class="movie-info">
+              <h4>${movie.title}</h4>
+              <p>Type: ${movie.type}</p>
+            </div>
+          </div>
+        `;
+        movieList.innerHTML += card;
+      });
+    }
+
+    function searchMovies() {
+      const keyword = document.getElementById("searchInput").value.toLowerCase();
+      const filtered = movies.filter(movie => movie.title.toLowerCase().includes(keyword));
+      displayMovies(filtered);
+    }
+
+    // Show all movies on page load
+    window.onload = () => displayMovies(movies);
+  </script>
+</body>
+</html>
